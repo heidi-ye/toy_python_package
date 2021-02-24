@@ -1,24 +1,32 @@
 import pandas as pd
 
-def aMean(a):
+def catbind(a, b):
     """
-    Returns the mean of the row.
+    Concatenates two pandas categoricals.
 
     Parameters
     ----------
-    a : pandas.core.series.Series
-      A pandas series.
+    a : pandas.core.arrays.categorical.Categorical
+      A pandas categorical.
+    b : pandas.core.arrays.categorical.Categorical
+      A pandas categorical that you wish to concatenate to a.
 
     Returns
     -------
-    numpy.float64
-      A float of the series mean.
+    pandas.core.arrays.categorical.Categorical
+      The new concatenated pandas categorical.
 
     Examples
     --------
-    >>> from toy_python_package import toy_python_package
-    >>> a = pd.Series([1,1])
-    >>> toy_python_package.aMean(a)
-    1.0
+    >>> from pypkgs import pypkgs
+    >>> a = pd.Categorical(["character", "hits", "your", "eyeballs"])
+    >>> b = pd.Categorical(["but", "integer", "where it", "counts"])
+    >>> pypkgs.catbind(a, b)
+    [character, hits, your, eyeballs, but, integer, where it, counts]
+    Categories (8, object): [but, character, counts,
+    eyeballs, hits, integer, where it, your]
     """
-    return a.mean(axis = 0)
+    concatenated = pd.concat([pd.Series(a.astype("str")),
+                              pd.Series(b.astype("str"))])
+    return pd.Categorical(concatenated)
+
